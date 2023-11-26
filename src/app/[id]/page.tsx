@@ -22,14 +22,15 @@ const DynamicRoute = async() => {
       },
       body: JSON.stringify({"key":id}),
     }).then((response) => response.json()).then((response)=>{
+      if(response.status == "Failed")
+      {
+          alert("No Redirection Found");
+          setstatus("No Redirection Mentioned");
+      }
         if(response.status == "Success")
         {
             router.push(response.message)
             setmessage(response.message);
-        }
-        else if(response.status == "Failed")
-        {
-            setstatus("No Redirection Mentioned");
         }
     })
   },[id])
