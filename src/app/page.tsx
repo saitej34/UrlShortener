@@ -4,7 +4,6 @@
 
 import '@aws-amplify/ui-react/styles.css';
 import { Message, MessageColorTheme } from '@aws-amplify/ui-react';
-import Image from 'next/image';
 import { useState, ChangeEvent, FormEvent } from 'react';
 
 interface Result {
@@ -20,9 +19,11 @@ export default function Home() {
   const [resultStatus, setResultStatus] = useState<string>('');
   const [resultHeading, setResultHeading] = useState<string>('');
   const [resultTheme, setResultTheme] = useState<MessageColorTheme>('error');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const submitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setLoading(true);
     const data = {
       targetName: targetName,
       targetUrl: link,
@@ -56,6 +57,8 @@ export default function Home() {
       }
     } catch (error) {
       console.error('Error Message');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -126,22 +129,35 @@ export default function Home() {
           </label>
         )}
 
-        <button className="bg-blue-500 text-white px-4 py-2 rounded mb-5" onClick={submitHandler}>
-          Submit
+        <button
+          className={`bg-blue-500 text-white px-4 py-2 rounded mb-5 ${
+            loading ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+          onClick={submitHandler}
+          disabled={loading}
+        >
+          {loading ? (
+            <div className="flex items-center">
+              <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-blue-900 mr-2"></div>
+              Submitting...
+            </div>
+          ) : (
+            'Submit'
+          )}
         </button>
 
-        {resultTheme==="error" && boxDisplay ? <Message
-                                variation="filled"
-                                colorTheme="error"
-                                heading={resultHeading}>
-                                {resultStatus}
-                              </Message> : null}
-        {resultTheme==="success" && boxDisplay ? <Message
-                                variation="filled"
-                                colorTheme="success"
-                                heading={resultHeading}>
-                                <a href={resultStatus} target="_blank">{resultStatus}</a>
-                              </Message> : null}
+        {resultTheme === 'error' && boxDisplay ? (
+          <Message variation="filled" colorTheme="error" heading={resultHeading}>
+            {resultStatus}
+          </Message>
+        ) : null}
+        {resultTheme === 'success' && boxDisplay ? (
+          <Message variation="filled" colorTheme="success" heading={resultHeading}>
+            <a href={resultStatus} target="_blank" rel="noopener noreferrer">
+              {resultStatus}
+            </a>
+          </Message>
+        ) : null}
       </div>
     </div>
   );
