@@ -24,6 +24,7 @@ const DynamicRoute = async() => {
     }).then((response) => response.json()).then((response)=>{
       if(response.status == "Failed")
       {
+          setstatus("No Redirection Found");
           alert("No Redirection Found");
           setTimeout(()=>{
             redirect("https://cuturi.vercel.app");
