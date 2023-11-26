@@ -85,7 +85,7 @@ export default function Home() {
           Link:
           <input
             type="link"
-            className="w-full border border-gray-300 p-2 rounded mt-1"
+            className="w-full border border-gray-400 p-2 rounded mt-1"
             placeholder="Enter your link"
             value={link}
             onChange={handleLinkChange}
