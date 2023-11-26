@@ -1,7 +1,7 @@
 // pages/index.tsx
 
 "use client";
-
+import Head from 'next/head'
 import '@aws-amplify/ui-react/styles.css';
 import { Message, MessageColorTheme } from '@aws-amplify/ui-react';
 import { useState, ChangeEvent, FormEvent } from 'react';
@@ -82,6 +82,9 @@ export default function Home() {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-200">
+      <Head>
+        <title>Cut URL</title>
+      </Head>
       <div className="bg-white p-8 rounded shadow-md w-96">
         <h1 className="mb-5">URL SHORTENER</h1>
         <label className="block mb-4">

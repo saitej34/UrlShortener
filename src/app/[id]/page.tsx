@@ -1,6 +1,7 @@
 "use client";
 
 // Import the necessary modules
+import Head from 'next/head'
 import { redirect } from 'next/navigation'
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
@@ -30,6 +31,9 @@ const DynamicRoute = async() => {
     
   return (
     <div className="min-h-screen flex items-center justify-center">
+      <Head>
+        <title>Redirecting...</title>
+      </Head>
     <div className="text-center">
       <h1 className="text-4xl mb-8">Just a moment...</h1>
       <div className="slider relative">
