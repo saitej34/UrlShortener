@@ -9,7 +9,7 @@ if (!MONGODB_URI) {
 
 export default async function connectToDatabase() {
 
-  const connection = await mongoose.connect(MONGODB_URI);
+  const connection = await mongoose.connect("mongodb+srv://urlshort:zuQV2pmpjAAFQgkz@cluster0.ligpuzz.mongodb.net/?retryWrites=true&w=majority");
 
   return connection;
 }
