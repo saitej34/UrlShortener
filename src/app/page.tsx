@@ -1,26 +1,33 @@
+// pages/index.tsx
+
 "use client";
 
 import '@aws-amplify/ui-react/styles.css';
-import { Message } from '@aws-amplify/ui-react';
-import Image from 'next/image'
-import { useState } from 'react';
+import { Message, MessageColorTheme } from '@aws-amplify/ui-react';
+import Image from 'next/image';
+import { useState, ChangeEvent, FormEvent } from 'react';
+
+interface Result {
+  status: string;
+  message: string;
+}
 
 export default function Home() {
-  const [useUserKey, setUseUserKey] = useState(false);
-  const [targetName, setTargetName] = useState('Not Specified');
-  const [link, setLink] = useState('');
-  const [boxDisplay,setBoxDisplay] = useState(false);
-  const [resultStatus,setResultStatus] = useState('');
-  const [resultHeading,setResultHeading] = useState('');
-  const [resultTheme,setResultTheme] = useState('');
+  const [useUserKey, setUseUserKey] = useState<boolean>(false);
+  const [targetName, setTargetName] = useState<string>('Not Specified');
+  const [link, setLink] = useState<string>('');
+  const [boxDisplay, setBoxDisplay] = useState<boolean>(false);
+  const [resultStatus, setResultStatus] = useState<string>('');
+  const [resultHeading, setResultHeading] = useState<string>('');
+  const [resultTheme, setResultTheme] = useState<MessageColorTheme>('error');
 
-  const submitHandler = async(e : any) => {
+  const submitHandler = async (e: FormEvent) => {
     e.preventDefault();
     const data = {
-      targetName:targetName,
-      targetUrl:link
-    }
-    console.log(data)
+      targetName: targetName,
+      targetUrl: link,
+    };
+
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_HOSTURL}/api/urlcreate`, {
         method: 'POST',
@@ -31,18 +38,16 @@ export default function Home() {
       });
 
       if (response.ok) {
-        const result = await response.json();
+        const result: Result = await response.json();
         console.log(result);
-        if(result.status === "Failed")
-        {
-           setResultHeading("The User Key is Already Taken!");
-           setResultStatus("Try to Change the User Key");
-           setResultTheme("error");
-        }
-        else 
-        {
-          setResultTheme("success");
-          setResultHeading("Url Generated");
+
+        if (result.status === 'Failed') {
+          setResultHeading('The User Key is Already Taken!');
+          setResultStatus('Try to Change the User Key');
+          setResultTheme('error');
+        } else {
+          setResultTheme('success');
+          setResultHeading('Url Generated');
           setResultStatus(`http://localhost:3000/${result.message}`);
           setBoxDisplay(true);
         }
@@ -50,35 +55,32 @@ export default function Home() {
         console.error('Error:', response.statusText);
       }
     } catch (error) {
-      console.error("Error Message");
+      console.error('Error Message');
     }
-
-  }
+  };
 
   const toggleUseUserKey = () => {
-    if(useUserKey==false)
-    {
+    if (useUserKey === false) {
       setTargetName('');
     }
-    if(useUserKey==true)
-    {
+    if (useUserKey === true) {
       setTargetName('Not Specified');
     }
     setUseUserKey(!useUserKey);
   };
 
-  const handleTargetNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTargetNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTargetName(e.target.value);
   };
 
-  const handleLinkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleLinkChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLink(e.target.value);
   };
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-200">
       <div className="bg-white p-8 rounded shadow-md w-96">
-      <h1 className='mb-5'>URL SHORTENER</h1>
+        <h1 className="mb-5">URL SHORTENER</h1>
         <label className="block mb-4">
           Link:
           <input
@@ -106,7 +108,9 @@ export default function Home() {
               }`}
             ></label>
           </div>
-          <span className={`text-sm ${useUserKey ? 'text-blue-500' : 'text-gray-500'}`}>{useUserKey ? 'On' : 'Off'}</span>
+          <span className={`text-sm ${useUserKey ? 'text-blue-500' : 'text-gray-500'}`}>
+            {useUserKey ? 'On' : 'Off'}
+          </span>
         </div>
 
         {useUserKey && (
@@ -125,6 +129,7 @@ export default function Home() {
         <button className="bg-blue-500 text-white px-4 py-2 rounded mb-5" onClick={submitHandler}>
           Submit
         </button>
+
         {resultTheme==="error" && boxDisplay ? <Message
                                 variation="filled"
                                 colorTheme="error"
@@ -137,7 +142,6 @@ export default function Home() {
                                 heading={resultHeading}>
                                 <a href={resultStatus} target="_blank">{resultStatus}</a>
                               </Message> : null}
-                    
       </div>
     </div>
   );
