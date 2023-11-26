@@ -29,7 +29,7 @@ export default function Home() {
     };
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_HOSTURL}/api/urlcreate`, {
+      const response = await fetch(`/api/urlcreate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

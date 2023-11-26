@@ -13,7 +13,7 @@ const DynamicRoute = async() => {
   const pathname = usePathname();
   let id : string = (pathname.substring(1))
   useEffect(()=>{
-    fetch(`${process.env.NEXT_PUBLIC_HOSTURL}/api/getdata`, {
+    fetch(`/api/getdata`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
