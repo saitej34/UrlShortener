@@ -21,7 +21,7 @@ export default function Home() {
   const [resultHeading, setResultHeading] = useState<string>('');
   const [resultTheme, setResultTheme] = useState<MessageColorTheme>('error');
 
-  const submitHandler = async (e: FormEvent) => {
+  const submitHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const data = {
       targetName: targetName,
