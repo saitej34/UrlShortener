@@ -14,7 +14,7 @@ export default function Home() {
   const [resultHeading,setResultHeading] = useState('');
   const [resultTheme,setResultTheme] = useState('');
 
-  const submitHandler = async(e : React.ChangeEvent<HTMLButtonElement>) => {
+  const submitHandler = async(e : any) => {
     e.preventDefault();
     const data = {
       targetName:targetName,
