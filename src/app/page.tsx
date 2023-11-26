@@ -49,7 +49,7 @@ export default function Home() {
         } else {
           setResultTheme('success');
           setResultHeading('Url Generated');
-          setResultStatus(`http://localhost:3000/${result.message}`);
+          setResultStatus(`https://cuturi.vercel.app/${result.message}`);
           setBoxDisplay(true);
         }
       } else {
