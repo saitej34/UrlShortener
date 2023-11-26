@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 
 const DynamicRoute = async() => {
   const [message,setmessage] = useState('');
+  const [status,setstatus] = useState("We're redirecting you to your site...");
   const router  = useRouter();
   const pathname = usePathname();
   let id : string = (pathname.substring(1))
@@ -25,6 +26,10 @@ const DynamicRoute = async() => {
         {
             router.push(response.message)
             setmessage(response.message);
+        }
+        else if(response.status == "Failed")
+        {
+            setstatus("No Redirection Mentioned");
         }
     })
   },[id])
@@ -44,7 +49,7 @@ const DynamicRoute = async() => {
       </div>
       <br/>
       <p className="mt-8">
-        We're redirecting you to your site...
+      {status}
       {message ? <a href={message} className="text-blue-500 hover:underline">
           Click here.
         </a> : null}

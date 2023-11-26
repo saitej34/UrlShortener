@@ -16,7 +16,7 @@ export async function POST(req: Request, res: Response) {
       return new NextResponse(JSON.stringify({ status: 'Success', message: existingTargetName[0].targetUrl }));
     }
 
-      return new NextResponse(JSON.stringify({ status: 'Success', message: "No Redirection" }));
+      return new NextResponse(JSON.stringify({ status: 'Failed', message: "No Redirection" }));
   } catch (error) {
     console.error('Internal server error:', error);
     return new NextResponse('Error');
