@@ -58,7 +58,7 @@ const EmailAuth = () => {
           let url = `/api/document/auth?hashValue=${hashValue}&email=${email}`
           const result = axios.get(url);
           toast.success('OTP Verification Successful !!');
-          toast.success('Soon you will be receiving an email Cnfirmation from us!!')
+          toast.success('Soon you will be receiving an email Confirmation from us!!')
           setTimeout(()=>{},2000)
         } else {
           if (response.message === 'OTP Expired Start the Process from start') {
